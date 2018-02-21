@@ -4,7 +4,7 @@ import { Container, Header, Content, Footer, FooterTab, Button, Icon, Body, Titl
 import {
   StackNavigator,
 } from 'react-navigation';
-import { Image } from '../../../Library/Caches/typescript/2.6/node_modules/@types/react-native';
+import { Image } from 'react-native';
 
 class HomeScreen extends Component {
   static navigationOptions = {
