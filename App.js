@@ -1,28 +1,13 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Body, Title, Text } from 'native-base';
-
-import {
-  StackNavigator,
-} from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import { Image } from 'react-native';
+import { Font } from 'expo';
 
-export default class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-  }
+class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Home'
   };
-
-  async componentWillMount() {
-    await Expo.Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf"),
-    });
-    this.setState({ loading: false });
-  }
 
   render() {
     return (
