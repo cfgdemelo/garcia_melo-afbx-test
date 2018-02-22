@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { ActivityIndicator, View, ListView } from 'react';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Body, Title, Text, Card, CardItem, Thumbnail, Left, Right } from 'native-base';
 import { StackNavigator } from 'react-navigation';
-import { Image, Dimensions } from 'react-native';
+import { Image, Dimensions, Linking } from 'react-native';
 import { Font } from 'expo';
 
 const windowWidth = Dimensions.get('window').width;
 const windowWidthHalf = Dimensions.get('window').width / 2;
 var offers = [];
+var offersCatched = false;
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -53,10 +54,23 @@ class InfoScreen extends Component {
               </CardItem>
               <CardItem>
                 <Left>
-                  <Button>
-                    <Text>https://github.com/cfgdemelo/garcia_melo-afbx-test</Text>
-                  </Button>
+                  <Icon active name="logo-github" />
                 </Left>
+                <Body>
+                  <Button onPress={() => {Linking.openURL('https://github.com/cfgdemelo/garcia_melo-afbx-test')}}>
+                    <Text>Abrir projeto</Text>
+                  </Button>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Left>
+                  <Icon active name="logo-linkedin"/>
+                </Left>
+                <Body>
+                  <Button onPress={() => {Linking.openURL('https://linkedin.com/in/cfgdemelo')}}>
+                    <Text>Contratar</Text>
+                  </Button>
+                </Body>
               </CardItem>
             </Card>
           </Content>
@@ -79,12 +93,13 @@ export class FeedScreen extends Component {
       for (item in responseJson) {
         var offerItem = responseJson.offers;
         var offerItemLength = offerItem.length;
-        for (var i = 0; i < offerItemLength; i++) {
-          offers.push(offerItem[i]);
+        if (!offersCatched) {
+          for (var i = 0; i < offerItemLength; i++) {
+            offers.push(offerItem[i]);
+          }
+          offersCatched = true;
         }
       }
-      console.log(offers.length)
-
       this.setState({
         isLoading: false
       });
@@ -108,43 +123,41 @@ export class FeedScreen extends Component {
         <Image source={{uri: 'http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif'}} style={{height: 100, width: windowWidth, flex: 1, justifyContent: "center"}}/>
       );
     }
-
-    // var offersLenght = offers.length;
-    // for (var i = 0; i < offersLenght; i++) {
-      return (
-        <Container>
-          <Content>
-            <Card style={{width: windowWidthHalf}}
-                  dataArray={offers}
-                  renderRow={{offer}}>
-              <CardItem cardBody>
-                <Image source={{uri: offer.thumbnail}} style={{height: 100, width: null, flex: 1}}/>
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Icon active name="phone-portrait" />
-                </Left>
-                <Body>
-                  <Text>{offer.product.shortName}</Text>
-                </Body>
-                <Right>
-                </Right>
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Icon active name="pricetag" />
-                </Left>
-                <Body>
-                  <Text>R${offer.price}</Text>
-                </Body>
-                <Right>
-                </Right>
-              </CardItem>
-            </Card>
-          </Content>
-        </Container>
-      );
-    // }
+    return (
+      <Container>
+        <Content>
+          <Card dataArray={offers}
+                renderRow={(offer) =>
+                  <Card>
+                    <CardItem cardBody>
+                      <Image source={{uri: offer.thumbnail}} style={{height: 100, width: 100, flex: 1}}/>
+                    </CardItem>
+                    <CardItem>
+                      <Left>
+                        <Icon active name="phone-portrait" />
+                      </Left>
+                      <Body>
+                        <Text>{offer.product.shortName}</Text>
+                      </Body>
+                      <Right>
+                      </Right>
+                    </CardItem>
+                    <CardItem>
+                      <Left>
+                        <Icon active name="pricetag" />
+                      </Left>
+                      <Body>
+                        <Text>R${offer.price}</Text>
+                      </Body>
+                      <Right>
+                      </Right>
+                    </CardItem>
+                  </Card>
+              }>
+          </Card>
+        </Content>
+      </Container>
+    );
   }
 }
 
