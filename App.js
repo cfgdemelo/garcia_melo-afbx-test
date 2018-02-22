@@ -109,21 +109,23 @@ export class FeedScreen extends Component {
       );
     }
 
-    var offersLenght = offers.length;
-    for (var i = 0; i < offersLenght; i++) {
+    // var offersLenght = offers.length;
+    // for (var i = 0; i < offersLenght; i++) {
       return (
         <Container>
           <Content>
-            <Card>
+            <Card style={{width: windowWidthHalf}}
+                  dataArray={offers}
+                  renderRow={{offer}}>
               <CardItem cardBody>
-                <Image source={{uri: offers[i].thumbnail}} style={{height: 100, width: null, flex: 1}}/>
+                <Image source={{uri: offer.thumbnail}} style={{height: 100, width: null, flex: 1}}/>
               </CardItem>
               <CardItem>
                 <Left>
                   <Icon active name="phone-portrait" />
                 </Left>
                 <Body>
-                  <Text>{offers[i].product.shortName}</Text>
+                  <Text>{offer.product.shortName}</Text>
                 </Body>
                 <Right>
                 </Right>
@@ -133,7 +135,7 @@ export class FeedScreen extends Component {
                   <Icon active name="pricetag" />
                 </Left>
                 <Body>
-                  <Text>R${offers[i].price}</Text>
+                  <Text>R${offer.price}</Text>
                 </Body>
                 <Right>
                 </Right>
@@ -142,7 +144,7 @@ export class FeedScreen extends Component {
           </Content>
         </Container>
       );
-    }
+    // }
   }
 }
 
